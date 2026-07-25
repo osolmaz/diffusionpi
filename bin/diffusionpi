@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+# Launches the diffusionpi Pi app bundle via pi-factory (stock Pi, no fork).
+# Subcommands: run (default), demo, plan, validate.
+set -euo pipefail
+
+root="$(cd "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")/.." && pwd)"
+app_dir="$root/app"
+
+pi_factory() {
+  if command -v pi-factory >/dev/null 2>&1; then
+    pi-factory "$@"
+  else
+    npx -y @dutifuldev/pi-factory@latest "$@"
+  fi
+}
+
+case "${1:-run}" in
+  run) pi_factory run --app-dir "$app_dir" ;;
+  demo) pi_factory run --app-file "$app_dir/demo.pi-factory.toml" ;;
+  plan) pi_factory plan --app-dir "$app_dir" ;;
+  validate) pi_factory validate "$app_dir" ;;
+  *)
+    echo "usage: diffusionpi [run|demo|plan|validate]" >&2
+    exit 2
+    ;;
+esac

@@ -1,0 +1,31 @@
+id = "diffusionpi"
+name = "DiffusionPi"
+version = "0.1.0"
+schema_version = 1
+description = "Pi + DiffusionGemma with a live diffusion canvas (self-driving demo)"
+state_dir = "~/.local/state/diffusionpi"
+# Same launch as pi-factory.toml plus flags for an unattended demo: no tools
+# (nothing to approve, no accidental tool calls) and no approval prompts.
+pi_command = "npx -y @earendil-works/pi-coding-agent@latest --no-tools --no-approve"
+thinking = "medium"
+
+[provider]
+id = "vllm"
+base_url = "http://127.0.0.1:8000/v1"
+api = "openai-completions"
+
+[model]
+id = "nvidia/diffusiongemma-26B-A4B-it-NVFP4"
+name = "DiffusionGemma 26B-A4B NVFP4"
+context_window = 32768
+max_tokens = 8192
+reasoning = true
+
+[env]
+DIFFUSIONPI_DEMO = "1"
+
+[[extensions]]
+path = "../packages/diffusion-canvas/extensions/diffusion-canvas.ts"
+
+[[extensions]]
+path = "extensions/demo-mode.ts"
