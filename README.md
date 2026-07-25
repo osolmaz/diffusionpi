@@ -65,6 +65,16 @@ and `PI_DIFFUSION_CANVAS_METRICS_URL` as overrides. Against a server without
 the side channel it falls back to a clearly labeled simulation paced by the
 real commit bursts.
 
+If commits feel too jumpy in the chat (DiffusionGemma commits a whole
+256-token canvas at once by default), serve with a smaller canvas so commits
+land smaller and more often:
+
+```bash
+vllm serve ... --diffusion-config '{"canvas_length": 64}'
+```
+
+Smaller canvases trade some throughput for a smoother scroll.
+
 You can also use the widget with any Pi setup, no bundle needed:
 
 ```bash
