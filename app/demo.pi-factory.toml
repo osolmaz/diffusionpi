@@ -29,3 +29,6 @@ path = "../packages/diffusion-canvas/extensions/diffusion-canvas.ts"
 
 [[extensions]]
 path = "extensions/demo-mode.ts"
+
+[[extensions]]
+path = "extensions/smooth-scroll.ts"

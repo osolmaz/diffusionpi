@@ -16,6 +16,7 @@ app/                            pi-factory app bundle
   pi-factory.toml               interactive session
   demo.pi-factory.toml          self-driving demo (no tools, auto prompts)
   extensions/demo-mode.ts       demo driver + minimal demo chrome
+  extensions/smooth-scroll.ts   gradual viewport scroll (Pi internals hack)
   prompts/                      demo prompts
 packages/diffusion-canvas/      the canvas widget (standalone Pi package)
 docs/diffusion-canvas-repro.md  full reproduction guide
@@ -65,15 +66,31 @@ and `PI_DIFFUSION_CANVAS_METRICS_URL` as overrides. Against a server without
 the side channel it falls back to a clearly labeled simulation paced by the
 real commit bursts.
 
-If commits feel too jumpy in the chat (DiffusionGemma commits a whole
-256-token canvas at once by default), serve with a smaller canvas so commits
-land smaller and more often:
+## Smooth scroll
+
+Stock Pi appends a whole diffusion commit (~15+ lines) to the chat in one
+frame, which makes the viewport jump. The bundled `smooth-scroll` extension
+fixes this with a deliberate hack: it grabs the live TUI instance and wraps
+the chat container's `render()` so appended lines are revealed at a bounded
+rate (default 40 lines/s) instead of all at once. Real content, paced only at
+the render layer.
+
+Because it reaches into Pi internals, it is version-sensitive: it checks that
+the component tree looks like Pi 0.8x and silently no-ops otherwise, so a Pi
+upgrade degrades to the stock jumpy behavior rather than breaking.
+
+- `DIFFUSIONPI_SMOOTH_SCROLL=0` disables it
+- `DIFFUSIONPI_SCROLL_SPEED=<lines/s>` changes the reveal rate
+- `DIFFUSIONPI_SCROLL_DEBUG=<path>` logs per-frame pacing decisions
+
+Independently, you can also make the commits themselves smaller and more
+frequent server-side:
 
 ```bash
 vllm serve ... --diffusion-config '{"canvas_length": 64}'
 ```
 
-Smaller canvases trade some throughput for a smoother scroll.
+Smaller canvases trade some throughput for gentler commits.
 
 You can also use the widget with any Pi setup, no bundle needed:
 
