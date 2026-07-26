@@ -1,9 +1,32 @@
 {
-  "name": "diffusionpi-bundle",
-  "version": "0.1.0",
-  "private": true,
-  "description": "Dependency manifest for the diffusionpi Pi app bundle (shared Pi extension packages)",
+  "name": "diffusionpi",
+  "version": "0.2.0",
+  "description": "Watch a diffusion LLM denoise its answer live in the Pi TUI",
+  "keywords": [
+    "pi",
+    "diffusion",
+    "vllm",
+    "tui"
+  ],
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/osolmaz/diffusionpi.git"
+  },
+  "bugs": {
+    "url": "https://github.com/osolmaz/diffusionpi/issues"
+  },
+  "homepage": "https://github.com/osolmaz/diffusionpi#readme",
+  "bin": {
+    "diffusionpi": "bin/diffusionpi"
+  },
+  "files": [
+    "bin/**",
+    "app/**",
+    "docs/**",
+    "README.md",
+    "LICENSE"
+  ],
   "dependencies": {
     "pi-demo-mode": "github:osolmaz/pi-demo-mode#v0.1.0"
   }

@@ -25,7 +25,7 @@ reasoning = true
 PI_DEMO_MODE = "1"
 
 [[extensions]]
-path = "../packages/diffusion-canvas/extensions/diffusion-canvas.ts"
+path = "extensions/diffusion-canvas.ts"
 
 # Shared self-driving demo extension (npm dependency of the bundle; the
 # launcher installs it on first run and points the prompt files at ../prompts).

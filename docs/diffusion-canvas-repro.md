@@ -9,7 +9,7 @@ intermediate denoising states, rendered live in the Pi TUI.
 | Piece                 | Where it lives                                                                                                       | What it does                                                                                                                                                                                                                                                                                                                                                             |
 | --------------------- | -------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | vLLM canvas streaming | [`osolmaz/vllm`](https://github.com/osolmaz/vllm), branch `diffusion-canvas-events`, release tag `canvas-v0.23.1rc4` | Adds the opt-in `--diffusion-stream-canvas` server flag and the `GET /v1/diffusion/events` SSE side channel that emits the detokenized canvas on every denoising step. See the fork's [`DIFFUSION_CANVAS.md`](https://github.com/osolmaz/vllm/blob/diffusion-canvas-events/DIFFUSION_CANVAS.md). Tracked as [PR #1 on the fork](https://github.com/osolmaz/vllm/pull/1). |
-| Pi widget             | [`packages/diffusion-canvas`](../packages/diffusion-canvas/) in this repo                                            | Standalone Pi package that renders the canvas above the editor. Not published to a registry; this repo is its home.                                                                                                                                                                                                                                                      |
+| Pi widget             | [`app/extensions/diffusion-canvas.ts`](../app/extensions/diffusion-canvas.ts) in this repo                           | Self-contained Pi extension that renders the canvas above the editor. Not published separately; this repo is its home.                                                                                                                                                                                                                                                   |
 | diffusionpi app       | [`app/`](../app/) bundle + [`bin/diffusionpi`](../bin/diffusionpi) launcher                                          | pi-factory bundle that launches stock Pi with the widget against the local vLLM server.                                                                                                                                                                                                                                                                                  |
 
 The vLLM changes are deliberately not upstreamed; they are maintained as
@@ -64,10 +64,11 @@ bin/diffusionpi         # interactive session
 bin/diffusionpi demo    # self-driving story demo
 ```
 
-Or in plain Pi, install the package from a checkout of this repo:
+Or in plain Pi, load the self-contained extension file directly (copy it into
+your Pi extensions directory or pass it with `--extension`):
 
 ```bash
-pi install ./diffusionpi/packages/diffusion-canvas
+pi --extension ./diffusionpi/app/extensions/diffusion-canvas.ts
 ```
 
 The widget needs no configuration: it derives the events and metrics URLs

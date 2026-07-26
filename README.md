@@ -11,19 +11,29 @@ No forked Pi involved: this is a declarative
 ordinary Pi extensions.
 
 ```
-bin/diffusionpi                 launcher (pi-factory wrapper)
-app/                            pi-factory app bundle
-  pi-factory.toml               interactive session
-  demo.pi-factory.toml          self-driving demo (no tools, auto prompts)
-  extensions/smooth-scroll.ts   gradual viewport scroll (Pi internals hack)
-  prompts/                      demo prompts
-packages/diffusion-canvas/      the canvas widget (standalone Pi package)
-docs/diffusion-canvas-repro.md  full reproduction guide
+bin/diffusionpi                   launcher (pi-factory wrapper)
+app/                              pi-factory app bundle
+  pi-factory.toml                 interactive session
+  demo.pi-factory.toml            self-driving demo (no tools, auto prompts)
+  extensions/diffusion-canvas.ts  the live canvas widget
+  extensions/smooth-scroll.ts     gradual viewport scroll (Pi internals hack)
+  prompts/                        demo prompts
+docs/diffusion-canvas-repro.md    full reproduction guide
 ```
 
 The self-driving demo driver and minimal demo chrome come from the shared
 [pi-demo-mode](https://github.com/osolmaz/pi-demo-mode) extension, an npm
-dependency of the bundle that the launcher installs on first run.
+dependency installed automatically.
+
+## Install
+
+```bash
+npm install -g github:osolmaz/diffusionpi
+```
+
+That puts `diffusionpi` on your PATH. Alternatively clone the repo and run
+`bin/diffusionpi` directly; the launcher fetches its npm dependency on first
+run.
 
 ## Requirements
 
@@ -53,9 +63,9 @@ vllm serve nvidia/diffusiongemma-26B-A4B-it-NVFP4 \
 Then:
 
 ```bash
-bin/diffusionpi         # interactive session with the canvas
-bin/diffusionpi demo    # self-driving story demo (for recordings)
-bin/diffusionpi plan    # print the launch plan without running
+diffusionpi         # interactive session with the canvas
+diffusionpi demo    # self-driving story demo (for recordings)
+diffusionpi plan    # print the launch plan without running
 ```
 
 The launcher turns the bundle in `app/` into a Pi launch: provider `vllm` at
@@ -74,8 +84,7 @@ real commit bursts.
 A wall of concurrent diffusionpi sessions (and an mp4 of it) is a job for
 [demowall](https://github.com/osolmaz/demowall), a generic tool that runs N
 copies of any command in a tiled tmux grid and records tmux sessions in a
-themed Ghostty window. Put `bin/diffusionpi` on your PATH (for example
-`ln -s "$PWD/bin/diffusionpi" ~/.local/bin/diffusionpi`), then:
+themed Ghostty window:
 
 ```bash
 # 2x2 wall of self-driving demo sessions:
@@ -114,11 +123,11 @@ vllm serve ... --diffusion-config '{"canvas_length": 64}'
 
 Smaller canvases trade some throughput for gentler commits.
 
-You can also use the widget with any Pi setup, no bundle needed:
-
-```bash
-pi install ./diffusionpi/packages/diffusion-canvas
-```
+The canvas widget also works in any plain Pi setup, no bundle needed: it is a
+single self-contained extension file, so copy
+[`app/extensions/diffusion-canvas.ts`](app/extensions/diffusion-canvas.ts)
+into your Pi extensions directory (e.g. `~/.pi/agent/extensions/`) or pass it
+with Pi's `--extension` flag.
 
 See [docs/diffusion-canvas-repro.md](docs/diffusion-canvas-repro.md) for the
 full reproduction guide, including how the truthful streaming path works and
