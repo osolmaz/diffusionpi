@@ -66,6 +66,25 @@ and `PI_DIFFUSION_CANVAS_METRICS_URL` as overrides. Against a server without
 the side channel it falls back to a clearly labeled simulation paced by the
 real commit bursts.
 
+## Demo grid and recording
+
+A wall of concurrent diffusionpi sessions (and an mp4 of it) is orchestrated
+by [localpi](https://github.com/osolmaz/localpi), which provides the generic
+tmux grid and Ghostty recording tooling. Put `bin/diffusionpi` on your PATH
+(for example `ln -s "$PWD/bin/diffusionpi" ~/.local/bin/diffusionpi`), then:
+
+```bash
+# 2x2 wall of self-driving demo sessions:
+localpi grid --concurrency 4 --start -- diffusionpi demo
+
+# Record the wall to an mp4 in a Catppuccin-themed Ghostty window:
+localpi record --session pi-demo-<timestamp> --out demo.mp4 --seconds 60
+```
+
+Concurrency above 4 needs `--allow-high-concurrency` and should match the
+vLLM server's `--max-num-seqs`. See the localpi README for the full set of
+grid and record options.
+
 ## Smooth scroll
 
 Stock Pi appends a whole diffusion commit (~15+ lines) to the chat in one
