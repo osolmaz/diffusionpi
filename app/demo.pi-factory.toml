@@ -22,13 +22,15 @@ max_tokens = 8192
 reasoning = true
 
 [env]
-DIFFUSIONPI_DEMO = "1"
+PI_DEMO_MODE = "1"
 
 [[extensions]]
 path = "../packages/diffusion-canvas/extensions/diffusion-canvas.ts"
 
+# Shared self-driving demo extension (npm dependency of the bundle; the
+# launcher installs it on first run and points the prompt files at ../prompts).
 [[extensions]]
-path = "extensions/demo-mode.ts"
+path = "../node_modules/pi-demo-mode/extensions/demo-mode.ts"
 
 [[extensions]]
 path = "extensions/smooth-scroll.ts"

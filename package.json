@@ -1,0 +1,10 @@
+{
+  "name": "diffusionpi-bundle",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Dependency manifest for the diffusionpi Pi app bundle (shared Pi extension packages)",
+  "license": "MIT",
+  "dependencies": {
+    "pi-demo-mode": "github:osolmaz/pi-demo-mode#v0.1.0"
+  }
+}

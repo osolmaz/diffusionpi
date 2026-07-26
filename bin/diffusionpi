@@ -14,9 +14,23 @@ pi_factory() {
   fi
 }
 
+# Shared Pi extension packages (pi-demo-mode) are npm dependencies of the
+# bundle; fetch them on first run so the TOML extension paths resolve.
+ensure_deps() {
+  if [ ! -d "$root/node_modules/pi-demo-mode" ]; then
+    npm install --prefix "$root" --no-fund --no-audit >&2
+  fi
+}
+
+ensure_deps
+
 case "${1:-run}" in
   run) pi_factory run --app-dir "$app_dir" ;;
-  demo) pi_factory run --app-file "$app_dir/demo.pi-factory.toml" ;;
+  demo)
+    PI_DEMO_INITIAL_PROMPT_FILE="$app_dir/prompts/demo-initial.md" \
+      PI_DEMO_FOLLOWUP_PROMPT_FILE="$app_dir/prompts/demo-followup.md" \
+      pi_factory run --app-file "$app_dir/demo.pi-factory.toml"
+    ;;
   plan) pi_factory plan --app-dir "$app_dir" ;;
   validate) pi_factory validate "$app_dir" ;;
   *)

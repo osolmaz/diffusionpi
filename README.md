@@ -7,7 +7,7 @@ editor: instead of text appearing in silent bursts, you see accepted tokens
 and renoise tokens converge into the final text on every denoising step.
 
 No forked Pi involved: this is a declarative
-[pi-factory](https://github.com/dutifuldev/pi-factory) app bundle plus two
+[pi-factory](https://github.com/dutifuldev/pi-factory) app bundle plus
 ordinary Pi extensions.
 
 ```
@@ -15,12 +15,15 @@ bin/diffusionpi                 launcher (pi-factory wrapper)
 app/                            pi-factory app bundle
   pi-factory.toml               interactive session
   demo.pi-factory.toml          self-driving demo (no tools, auto prompts)
-  extensions/demo-mode.ts       demo driver + minimal demo chrome
   extensions/smooth-scroll.ts   gradual viewport scroll (Pi internals hack)
   prompts/                      demo prompts
 packages/diffusion-canvas/      the canvas widget (standalone Pi package)
 docs/diffusion-canvas-repro.md  full reproduction guide
 ```
+
+The self-driving demo driver and minimal demo chrome come from the shared
+[pi-demo-mode](https://github.com/osolmaz/pi-demo-mode) extension, an npm
+dependency of the bundle that the launcher installs on first run.
 
 ## Requirements
 
@@ -57,7 +60,7 @@ bin/diffusionpi plan    # print the launch plan without running
 
 The launcher turns the bundle in `app/` into a Pi launch: provider `vllm` at
 `http://127.0.0.1:8000/v1`, model `nvidia/diffusiongemma-26B-A4B-it-NVFP4`,
-and the two extensions. Edit `app/pi-factory.toml` if your server or model id
+and the extensions. Edit `app/pi-factory.toml` if your server or model id
 differ.
 
 The canvas widget needs no configuration: it derives the events and metrics

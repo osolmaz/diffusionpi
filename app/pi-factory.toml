@@ -22,8 +22,10 @@ reasoning = true
 [[extensions]]
 path = "../packages/diffusion-canvas/extensions/diffusion-canvas.ts"
 
+# Shared self-driving demo extension; inert unless PI_DEMO_MODE=1 (the demo
+# manifest sets it), so it is safe to keep loaded in interactive sessions.
 [[extensions]]
-path = "extensions/demo-mode.ts"
+path = "../node_modules/pi-demo-mode/extensions/demo-mode.ts"
 
 [[extensions]]
 path = "extensions/smooth-scroll.ts"
