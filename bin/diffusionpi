@@ -10,7 +10,7 @@ pi_factory() {
   if command -v pi-factory >/dev/null 2>&1; then
     pi-factory "$@"
   else
-    npx -y @dutifuldev/pi-factory@latest "$@"
+    npx -y @osolmaz/pi-factory@latest "$@"
   fi
 }
 
