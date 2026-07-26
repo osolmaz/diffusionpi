@@ -1,0 +1,46 @@
+name: publish
+
+on:
+  release:
+    types: [published]
+
+permissions:
+  contents: write
+  id-token: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v5
+        with:
+          node-version: "22"
+          registry-url: https://registry.npmjs.org
+      - name: Validate release tag
+        run: |
+          tag="${GITHUB_REF_NAME#v}"
+          version="$(node -p "require('./package.json').version")"
+          if [ "$tag" != "$version" ]; then
+            echo "release tag v$tag does not match package version $version" >&2
+            exit 1
+          fi
+          git fetch origin main
+          if ! git merge-base --is-ancestor HEAD origin/main; then
+            echo "tagged commit is not on main" >&2
+            exit 1
+          fi
+      - name: Pack tarball
+        run: npm pack && mv diffusionpi-*.tgz diffusionpi.tgz
+      - name: Attach tarball to release
+        run: gh release upload "$GITHUB_REF_NAME" diffusionpi.tgz --clobber
+        env:
+          GH_TOKEN: ${{ github.token }}
+      # Trusted publishing (OIDC) needs a recent npm and the trusted publisher
+      # configured for this repository on npmjs.com.
+      - name: Publish to npm
+        run: |
+          npm install -g npm@latest
+          npm publish
