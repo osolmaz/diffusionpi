@@ -68,22 +68,22 @@ real commit bursts.
 
 ## Demo grid and recording
 
-A wall of concurrent diffusionpi sessions (and an mp4 of it) is orchestrated
-by [localpi](https://github.com/osolmaz/localpi), which provides the generic
-tmux grid and Ghostty recording tooling. Put `bin/diffusionpi` on your PATH
-(for example `ln -s "$PWD/bin/diffusionpi" ~/.local/bin/diffusionpi`), then:
+A wall of concurrent diffusionpi sessions (and an mp4 of it) is a job for
+[demowall](https://github.com/osolmaz/demowall), a generic tool that runs N
+copies of any command in a tiled tmux grid and records tmux sessions in a
+themed Ghostty window. Put `bin/diffusionpi` on your PATH (for example
+`ln -s "$PWD/bin/diffusionpi" ~/.local/bin/diffusionpi`), then:
 
 ```bash
 # 2x2 wall of self-driving demo sessions:
-localpi grid --concurrency 4 --start -- diffusionpi demo
+demowall grid --concurrency 4 --start -- diffusionpi demo
 
 # Record the wall to an mp4 in a Catppuccin-themed Ghostty window:
-localpi record --session pi-demo-<timestamp> --out demo.mp4 --seconds 60
+demowall record --session demowall-<timestamp> --out demo.mp4 --seconds 60
 ```
 
 Concurrency above 4 needs `--allow-high-concurrency` and should match the
-vLLM server's `--max-num-seqs`. See the localpi README for the full set of
-grid and record options.
+vLLM server's `--max-num-seqs`.
 
 ## Smooth scroll
 
