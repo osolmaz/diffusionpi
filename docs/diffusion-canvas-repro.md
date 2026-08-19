@@ -68,7 +68,7 @@ Or in plain Pi, load the self-contained extension file directly (copy it into
 your Pi extensions directory or pass it with `--extension`):
 
 ```bash
-pi --extension ./diffusionpi/app/extensions/diffusion-canvas.ts
+pi --extension ./pi-diffusion/app/extensions/diffusion-canvas.ts
 ```
 
 The widget needs no configuration: it derives the events and metrics URLs
