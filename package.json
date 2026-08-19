@@ -11,12 +11,12 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/osolmaz/pi-diffusion.git"
+    "url": "git+https://github.com/osolmaz/diffusionpi.git"
   },
   "bugs": {
-    "url": "https://github.com/osolmaz/pi-diffusion/issues"
+    "url": "https://github.com/osolmaz/diffusionpi/issues"
   },
-  "homepage": "https://github.com/osolmaz/pi-diffusion#readme",
+  "homepage": "https://github.com/osolmaz/diffusionpi#readme",
   "bin": {
     "diffusionpi": "bin/diffusionpi"
   },

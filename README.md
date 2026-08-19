@@ -28,7 +28,7 @@ dependency installed automatically.
 ## Install
 
 ```bash
-npm install -g github:osolmaz/pi-diffusion
+npm install -g github:osolmaz/diffusionpi
 ```
 
 That puts `diffusionpi` on your PATH. Alternatively clone the repo and run
